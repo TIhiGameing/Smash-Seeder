@@ -259,7 +259,7 @@ function getPlayerValue(players) {
         player_values[player] = 0;
     }
 
-    for (let index = 0; index < 10 ; index++) {
+    for (let index = 0; index < 3 ; index++) {
         for (const [player, rankings] of Object.entries(players)) {
             if (player in players) {
                 let total = 0;
@@ -306,4 +306,5 @@ function averageWinrate(players, player) {
     }
 
     return total / Object.keys(player).length;
+
 }
