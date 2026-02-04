@@ -1,0 +1,54 @@
+{
+    "Abdalla" : {
+        "Leah": 0,
+        "Pete" : 100
+    },
+    "Adrian": {
+        "Eivind" : 0,
+        "Erik" : 100,
+        "Jens" : 0,
+        "Ludvig" : 50
+    },
+    "Angus" : {
+
+    },
+    "Bendik" : {
+
+    },
+    "Eivind": {
+        "Adrian" : 100,
+        "Erik" : 100,
+        "Jens" : 80,
+        "Ludvig" : 100
+    },
+    "Erik" : {
+        "Adrian" : 0,
+        "Eivind" : 0,
+        "Jens" : 0,
+        "Leah" : 100,
+        "Pete" : 100
+    },
+    "Jens": {
+        "Adrian" : 100,
+        "Eivind" : 20,
+        "Erik" : 100,
+        "Leah" : 100,
+        "Ludvig" : 100
+    },
+    "Leah" : {
+        "Abdalla" : 100,
+        "Erik" : 0,
+        "Jens" : 0,
+        "Ludvig" : 0
+    },
+    "Ludvig": {
+        "Adrian" : 50,
+        "Eivind" : 0,
+        "Jens" : 0,
+        "Leah" : 100
+    },
+    "Pete" : {
+        "Abdalla" : 0,
+        "Erik" : 0
+    }
+}
