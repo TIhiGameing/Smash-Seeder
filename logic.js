@@ -212,8 +212,9 @@ function getSeeding(players) {
     let seeding = {};
     console.log(scoring);
     for (const [player, score] of Object.entries(scoring)) {
-        seeding[player] = (score.reduce((a, b) => a + b, 0) / score.length);
-
+        //seeding[player] = (score.reduce((a, b) => a + b, 0) / score.length);
+        seeding[player] = Math.max(...score);
+        
         if (player == "Adrian") {
             console.log(seeding[player]);
         }
@@ -324,6 +325,7 @@ function averageWinrate(players, player) {
     return total / Object.keys(player).length;
 
 }
+
 
 
 
