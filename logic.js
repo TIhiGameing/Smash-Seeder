@@ -60,7 +60,7 @@ function start() {
 }
 
 function data_loaded(out) {
-    player_rankings = out;
+    player_rankings = convert_winrate(out);
     base_player_value = getPlayerValue(player_rankings);
     playerDiv = document.getElementById("players");
 
@@ -87,6 +87,22 @@ function data_loaded(out) {
 
     document.getElementById("toggle_button").onclick = toggle_on_click;
     document.getElementById("seed_button").onclick = seed_on_click;
+}
+
+function convert_winrate (data) {
+    let out = {};
+
+    for (const [player, opponents] of Object.entries(data)) {
+        out[player] = {};
+        for (const [opponent, winrate] of Object.entries(opponents)) {
+            let x = parseInt(winrate.split("/")[0])
+            let y = parseInt(winrate.split("/")[1])
+
+            out[player][opponent] = x/y * 100;
+        }
+    }
+
+    return out
 }
 
 function toggle_on_click() {
@@ -308,5 +324,6 @@ function averageWinrate(players, player) {
     return total / Object.keys(player).length;
 
 }
+
 
 
