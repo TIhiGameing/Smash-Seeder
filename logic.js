@@ -141,15 +141,14 @@ function seed_on_click() {
     seedDiv.innerHTML = seedOutput;
 
     let scoreOutput = "Player Scores:<br>";
-    let max_score = Math.max(...seeding.map(player => player.score));
+    let max_value = Math.max(...seeding.map(player => player.value));
     for (let i = 0; i < Object.keys(seeding).length; i++) {
-        let score_str = (Math.round(seeding[i]["score"]/max_score * 100 * 10)/10).toString();
+        let score_str = (Math.round(seeding[i]["score"]/max_value * 100 * 10)/10).toString();
         scoreOutput += "Score " + score_str + "<br>";
     }
     scoreDiv.innerHTML = scoreOutput;
 
     let valueOutput = "Player Values:<br>";
-    let max_value = Math.max(...seeding.map(player => player.value));
     for (let i = 0; i < Object.keys(seeding).length; i++) {
         let value_str = (Math.round(seeding[i]["value"]/max_value * 100 * 10)/10).toString();
         valueOutput += "Value " + value_str + "<br>";
@@ -325,6 +324,7 @@ function averageWinrate(players, player) {
     return total / Object.keys(player).length;
 
 }
+
 
 
 
