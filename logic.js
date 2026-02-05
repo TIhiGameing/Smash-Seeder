@@ -3,46 +3,6 @@ let json = fetch("./data.json")
 .then(json => data_loaded(json));
 
 let player_rankings = {};
-//{
-//     "Abdalla" : [
-//         7
-//     ],
-//     "Adrian" : [
-//         4,
-//         4,      
-//         3,
-//         3
-//     ],
-//     "Eivind" : [
-//         2,
-//         1,
-//         1,
-//         1
-//     ],
-//     "Erik" : [
-//         5,
-//         5
-//     ],
-//     "Jens" : [
-//         1,
-//         2,
-//         2,
-//         2
-//     ],
-//     "Leah" : [
-//         5,
-//         6
-//     ],
-//     "Ludvig" : [
-//         3,
-//         3,
-//         4,
-//         4
-//     ],
-//     "Pete" : [
-//         8
-//     ]
-// }
 
 
 let base_player_value;
@@ -213,15 +173,11 @@ function getSeeding(players) {
     for (const [player, score] of Object.entries(scoring)) {
         //seeding[player] = (score.reduce((a, b) => a + b, 0) / score.length);
         seeding[player] = Math.max(...score);
-        
-        if (player == "Adrian") {
-            console.log(seeding[player]);
-        }
 
         if (seeding[player] === 0 || score.length === 1) {
             seeding[player] = averageWinrate(players, player)/100; 
         }
-        seeding[player] += player_values[player];   
+        //seeding[player] += player_values[player];   
     }
     const sortedSeeding = Object.keys(seeding)
     .sort((a, b) => seeding[b] - seeding[a]);
@@ -324,6 +280,7 @@ function averageWinrate(players, player) {
     return total / Object.keys(player).length;
 
 }
+
 
 
 
