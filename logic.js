@@ -8,16 +8,16 @@ let json = fetch("./data.json")
 
 
 let players = [
-    "Eivind", //0
-    "Jens", //1
-    "Ludvig", //2
-    "Adrian", //3
-    "Erik", //4
-    "Leah", //5
-    "Abdalla", //6
-    "Pete", //7
-    "Angus", //8
-    "Bendik" //9
+    ["Eivind", false], //0
+    ["Jens", false], //1
+    ["Ludvig", false], //2
+    ["Adrian", false], //3
+    ["Erik", true], //4
+    ["Leah", true], //5
+    ["Abdalla", true], //6
+    ["Pete", true], //7
+    ["Angus", true], //8
+    ["Bendik", true] //9
 ];
 
 let player_objects = [];
@@ -80,14 +80,14 @@ function data_loaded(data) {
     //HTML
     playerDiv = document.getElementById("players");
 
-    for (const key of [...players].sort() ) {
+    for (const key of [...players].sort((a, b) => a[0] - b[0]) ) {
         let player_label = document.createElement("label");
-        player_label.htmlFor = key;
-        player_label.textContent = key;
+        player_label.htmlFor = key[0];
+        player_label.textContent = key[0];
         let player_checkbox = document.createElement("input");
         player_checkbox.type = "checkbox";
-        player_checkbox.id = key;
-        player_checkbox.name = key;
+        player_checkbox.id = players.findIndex(x => x[0] === key[0]);
+        player_checkbox.name = key[0];
         player_checkbox.checked = true;
 
         playerDiv.appendChild(player_label);
@@ -102,17 +102,27 @@ function data_loaded(data) {
 }
 
 class Player {
-    constructor(name) {
-        this.id = name;
-        this.name = players[name];
+    constructor(id) {
+        this.id = id;
+        this.name = players[id][0];
+        this.amateur = players[id][1];
         this.elo = 1500;
         this.games_played = 0;
     }
 
     get_elo() {
         
-        let play_time_mod = Math.min(this.games_played, MIN_GAMES)/MIN_GAMES;
-        return Math.round(this.elo * play_time_mod);
+        //let play_time_mod = Math.min(this.games_played, MIN_GAMES)/MIN_GAMES;
+
+        if (this.games_played == 0) {
+            return 0;
+        }
+        else if (this.amateur) {
+            return Math.round(this.elo * 0.5);
+        }
+        else {
+            return this.elo;
+        }
     }
 }
 
@@ -148,7 +158,9 @@ function seed_on_click() {
     let included_players = [];
 
     playerCheckboxes.forEach(element => {
-        let player_id = players.indexOf(element.id);
+        let player_id = element.id;
+        console.log(element.id);
+
 
         element.checked ? included_players.push(player_objects[player_id]) : null;
     });
@@ -156,29 +168,28 @@ function seed_on_click() {
 
     let seedDiv = document.getElementById("seed");
     let scoreDiv = document.getElementById("score");
-    let playDiv = document.getElementById("play_count");
+    let rankDiv = document.getElementById("ranking");
     let actualDiv = document.getElementById("actual");
 
     included_players = included_players.sort((a, b) => a.name.localeCompare(b.name));
     let seeding = included_players.sort((a, b) => b.get_elo() - a.get_elo());
-    console.log(seeding);
     
 
     let seedOutput = "Seeding order:<br>";
     let scoreOutput = "Player Scores:<br>";
-    let playOutput = "Games Played (" + MIN_GAMES.toString() + " required for max score):<br>";
+    let rankOutput = "Rank Type:<br>";
     let actualOutput = "Actual Score:<br>";
     for (let i = 0; i < seeding.length; i++) {
         seedOutput += (i + 1) + ". " + seeding[i].name + "<br>";
 
         scoreOutput += "Score " + seeding[i].get_elo().toString() + "<br>";
 
-        playOutput += seeding[i].games_played.toString() + " Games <br>";
+        rankOutput += (seeding[i].games_played == 0 ? "Unranked" : seeding[i].amateur ? "Half-Ranked" : "Ranked") + "<br>";
 
         actualOutput += seeding[i].elo.toString() + "<br>";
     }
     seedDiv.innerHTML = seedOutput;
     scoreDiv.innerHTML = scoreOutput;
-    playDiv.innerHTML = playOutput;
+    rankDiv.innerHTML = rankOutput;
     actualDiv.innerHTML = actualOutput;
 }
