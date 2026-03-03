@@ -135,8 +135,12 @@ function CalculateRatingChange(winner, loser)
 
     let win = Math.round( K * ( 1 - percentage ) );
 
-    player_objects[winner].elo += win;
-    player_objects[loser].elo -= win;
+
+    if ((player_objects[winner].amateur && player_objects[loser].amateur || (!player_objects[winner].amateur && !player_objects[loser].amateur))) {
+        player_objects[winner].elo += win;
+        player_objects[loser].elo -= win;
+    }
+
 }
 
 
